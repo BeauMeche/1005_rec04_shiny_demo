@@ -35,7 +35,7 @@ ui <- navbarPage(
                                  "var_plot",
                                  "Choose a Response Category",
                                  choices = c("Enrollment" = "enrollment", 
-                                   "Workload per Week" = "hours")
+                                   "Instructor Rating" = "rating")
                              ),
                              width = 300),
                          plotOutput("line_plot",
@@ -140,7 +140,6 @@ server <- function(input, output) {
     output$map2 <- renderPlot({
         map2
     })
-    
     
     
 }

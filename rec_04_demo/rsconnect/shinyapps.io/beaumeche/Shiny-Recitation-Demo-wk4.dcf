@@ -5,9 +5,9 @@ account: beaumeche
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3677038
-bundleId: 4256389
+bundleId: 4295987
 url: https://beaumeche.shinyapps.io/Shiny-Recitation-Demo-wk4/
-when: 1613995459.44563
+when: 1614788677.59422
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: poverty_map.csv
