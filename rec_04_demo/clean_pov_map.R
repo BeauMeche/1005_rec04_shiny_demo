@@ -5,6 +5,17 @@ library(gt)
 library(janitor)
 library(tidyverse)
 library(ggthemes)
+library(primer.data)
+
+
+# This is the code that went into creating the map displayed in the app. Recall
+# that any use of either an individual census API key or (at least at the time
+# this app was created) direct usage of the `get_acs()` geometry data resulted
+# in an error when publishing through shiny's servers even though the app runs
+# locally. As an example of this, forking and running this repo will produce
+# different output than will the link to the published one located here:
+# https://beaumeche.shinyapps.io/Shiny-Recitation-Demo-wk4/?_ga=2.210075863.396402220.1618285738-1337845087.1599370647 
+
 
 # from load_variables() call and lots of scrolling - use same specs
 # as you do in get_*()
@@ -44,7 +55,7 @@ library(ggthemes)
 #   clean_names() %>%
 #   mutate(pov_ratio = (poverty_pop/total_pop)*100)
 
-
+# saving the map data locally to get around the API
 
 # saveRDS(x1, file = 'poverty_map.Rds')
 
@@ -59,9 +70,9 @@ library(ggthemes)
 #            fill = "% HH") +
 #       theme_few()
 
-library(primer.data)
 
-# primer.data::qscores
+# making the table - other table packages like `kable`, `gtsummary`, etc. are
+# cool too
 
 table <- nhanes %>% 
   select(gender, education, bmi) %>% 
@@ -73,17 +84,6 @@ table <- nhanes %>%
   cols_label(education = "Education",
              avg_bmi = "Avg. BMI") %>% 
   cols_align(align = "left")
-
-# qscores %>% 
-#   ggplot(aes(x = hours,
-#              y = enrollment,
-#              color = term)) +
-#   geom_point() +
-#   labs(
-#     title = "Workload at Harvard",
-#     y = "# Enrolled",
-#     x = "Expected Workload / Week",
-#     color = "Term")
   
 
 plot_enroll <- qscores %>% 
@@ -109,7 +109,6 @@ plot_rating <- qscores %>%
     y = "Instructor Rating",
     x = "Expected Workload / Week",
     color = "Term")
-
 
 # ____________
 

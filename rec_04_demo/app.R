@@ -1,28 +1,18 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
-# getwd()
-# setwd("rec_04_demo/")
 
 library(tidyverse)
 library(primer.data)
 library(shinythemes)
 library(shiny)
 
-source(file = "clean_pov_map.R")
+# Sourcing files (.R files "Rscripts" only) allows you access to those files and
+# their objects / plots etc. Bear in mind that unless data is stored locally and
+# graphics are stored as images, outputs will still be re-generated when the app
+# compiles.
 
-# for plot opt. 2:
-# CSV had same tibble force issue with [geometry]
+source(file = "clean_pov_map.R")
 
 data1 <- read_rds("poverty_map.Rds")
 
-# Define UI for application that draws a histogram
 ui <- navbarPage(
     
     tabsetPanel(
@@ -31,13 +21,31 @@ ui <- navbarPage(
                      titlePanel("Qscores Data"),
                      sidebarLayout(
                          sidebarPanel(
+                             
                              selectInput(
+                                 
+                                 # The first arg. here sets the local variable
+                                 # that you use to toggle selections from the UI
+                                 # within the server
+                                 
                                  "var_plot",
+                                 
+                                 # The second position labels the selection pane
+                                 # / area
+                                 
                                  "Choose a Response Category",
+                                 
+                                 # These equations link the displayed options in
+                                 # the UI as the user will see them to the value
+                                 # taken on by the local variable. User selects
+                                 # "Enrollment", local var becomes =
+                                 # "enrollment"
+                                 
                                  choices = c("Enrollment" = "enrollment", 
                                    "Instructor Rating" = "rating")
                              ),
                              width = 300),
+                         
                          plotOutput("line_plot",
                                     width = 550,
                                     height = 500)))),
@@ -76,12 +84,14 @@ ui <- navbarPage(
         
     ))
 
-# Define server logic required to draw a histogram
 server <- function(input, output) {
     
     output$link <- renderUI({
-        tags$a(href="https://beaumeche.shinyapps.io/Shiny-Recitation-Demo-wk4/", "Here is the link to this repo")
+        tags$a(href="https://github.com/BeauMeche/Shiny_app_demo_1005", "Here is the link to this repo")
     })
+    
+    
+    # This is the interactive portion, all else is more or less static
         
     output$line_plot <- renderPlot({
         
@@ -94,27 +104,12 @@ server <- function(input, output) {
                            y = z,
                            color = term)) +
                 geom_point(alpha = 0.5) +
-                labs(
-                    title = "Student Reports from Courses at Harvard",
-                    y = str_to_title(input$var_plot),
-                    x = "Expected Workload / Week",
-                    color = "Term",
-                    caption = "Source: Harvard Registrar's Office")
-        
-        
+                labs(title = "Student Reports from Courses at Harvard",
+                     y = str_to_title(input$var_plot),
+                     x = "Expected Workload / Week",
+                     color = "Term",
+                     caption = "Source: Harvard Registrar's Office")
     })
-    
-    # output$pov_plot <- renderPlot({
-    #     x1 %>%
-    #         ggplot(aes(fill = pov_ratio)) +
-    #         geom_sf() +
-    #         scale_fill_viridis_c(option = "viridis") +
-    #         labs(title = "Impoverished Households - 2015",
-    #              subtitle = "Poverty Line in 2015 was $24,250 for a family of 4",
-    #              caption = "Sources: ACS 2015, ASPE",
-    #              fill = "% HH") +
-    #         theme_few()
-    # })
     
     output$pov_plot2 <- renderPlot({
         
@@ -128,7 +123,7 @@ server <- function(input, output) {
                  fill = "% HH") +
             theme_few()
     
-    # for the 3rd map    
+    # This makes the image for the 3rd (working) map. 
     # ggsave("img01.png", plot = last_plot())
         
     })
