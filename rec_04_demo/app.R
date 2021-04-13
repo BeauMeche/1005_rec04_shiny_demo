@@ -18,7 +18,7 @@ ui <- navbarPage(
     tabsetPanel(
         tabPanel("Interactivity",
                  fluidPage(
-                     titlePanel("Qscores Data"),
+                     titlePanel("Harvard Qscores Data"),
                      sidebarLayout(
                          sidebarPanel(
                              
